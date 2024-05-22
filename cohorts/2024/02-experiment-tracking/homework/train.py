@@ -5,6 +5,12 @@ import click
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
+import mlflow
+
+
+mlflow.set_tracking_uri("http://mlflow_container_ui:8000")
+mlflow.set_experiment("nyc-taxi-experiment-1")
+mlflow.autolog()
 
 def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
@@ -30,4 +36,5 @@ def run_train(data_path: str):
 
 
 if __name__ == '__main__':
-    run_train()
+    with mlflow.start_run():
+        run_train()

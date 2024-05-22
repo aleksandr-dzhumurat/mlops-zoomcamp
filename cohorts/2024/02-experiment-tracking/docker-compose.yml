@@ -1,0 +1,62 @@
+version: '3'
+services:
+  mlflow:
+    build:
+      context: ./services/mlflow
+    depends_on:
+      - minio
+    env_file:
+      - .env
+    volumes:
+      - ./data_store/mlflow:/srv/mlflow
+      - ./services/mlflow/src:/srv/src
+    container_name: mlflow_container_ui
+    ports:
+      - 8000:8000
+    networks:
+      - prj_network
+    command: >
+      serve
+  mlflow-jupyter:
+    build:
+      context: ./services/mlflow
+    depends_on:
+      - mlflow
+    env_file:
+      - .env
+    volumes:
+      - ./data_store:/srv/data
+      - ./homework:/srv/src/jupyter_notebooks
+      - /Users/username/Downloads/data:/srv/data/trips
+    container_name: mlflow_jupyter
+    ports:
+      - 8890:8888
+    networks:
+      - prj_network
+    command: >
+      jupyter notebook src/jupyter_notebooks
+      --ip 0.0.0.0
+      --port 8888
+      --allow-root
+      --no-browser
+      --NotebookApp.token=''
+      --NotebookApp.password=''
+  minio:
+    build:
+      context: ./services/minio
+    env_file:
+      - .env
+    volumes:
+      - ./data_store/minio:/data
+    networks:
+      prj_network:
+        aliases:
+          - s3
+    container_name: s3
+    ports:
+      - 9001:9001
+networks:
+  prj_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
