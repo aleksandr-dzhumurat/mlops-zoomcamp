@@ -19,8 +19,8 @@ __pycache__/
 **.terraform.lock*
 **terraform.tfstate*
 
-homework/output/
-homework/mlruns/
+cohorts/2024/02-experiment-tracking/homework/mlruns
+cohorts/2024/02-experiment-tracking/homework/output
 
 
 
