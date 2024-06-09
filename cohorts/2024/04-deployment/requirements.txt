@@ -1,0 +1,9 @@
+numpy
+# scikit-learn==1.2.2
+scikit-learn==1.5.0
+pandas==1.4.2
+requests
+jupyter==1.0.0
+fastparquet==0.7.1
+pyarrow
+seaborn
