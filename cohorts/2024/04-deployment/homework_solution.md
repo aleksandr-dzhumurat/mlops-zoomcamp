@@ -34,6 +34,11 @@ pipenv install  -r requirements.txt
 jupyter nbconvert homework/starter.ipynb --to python --output prediction_script.py
 ```
 
+
+```python
+python prediction_script.py 2023 04 ~/Downloads/data
+```
+
 ```shell
 docker build -t mlops-deploy:latest -f Dockerfile homework
 ```
@@ -42,13 +47,5 @@ docker build -t mlops-deploy:latest -f Dockerfile homework
 docker run -v "${HOME}/Downloads/data:/srv/data" -it mlops-deploy:latest
 ```
 
-
 https://www.youtube.com/watch?v=18Lbaaeigek&list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK
 
-```python
-tax_type = sys.argv[1]
-```
-
-```python
-python homework/prediction_script.py 2024 04
-```
