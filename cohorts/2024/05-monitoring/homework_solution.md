@@ -18,7 +18,13 @@ source ~/.pyenv/versions/evidently-env/bin/activate
 pip install --upgrade pip
 ```
 
-
 ```shell
 pip install  -r requirements.txt
 ```
+
+```shell
+jupyter notebook
+ . --ip 0.0.0.0 --port 8887 --NotebookApp.token='' --NotebookApp.password='' --allow-root --no-browser
+```
+
+[Saving Dashboards](https://youtu.be/-c4iumyZMyw?list=PL3MmuxUbc_hIUISrluw_A7wDSmfOhErJK&t=202)
