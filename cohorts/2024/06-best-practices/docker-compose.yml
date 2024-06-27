@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      - "4572:4572"
+    environment:
+      - SERVICES=s3
+      # - HOSTNAME=localstack
+      # - HOSTNAME_EXTERNAL=localstack
+      - DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - AWS_ACCESS_KEY_ID=abc
+      - AWS_SECRET_ACCESS_KEY=xyz
+    # volumes:
+    #   - "./data/localstack:/tmp/localstack"
+    #   - "./data/cache:/.cache"
+    #   - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      prj_network:
+        aliases:
+          - localstack
+    # user: "1001"
+    # entrypoint: >
+    #   /bin/sh -c "until curl -s http://localhost:4566/health; do sleep 1; done; localstack start"
+
+  app:
+    image: localstack/localstack:latest
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - S3_ENDPOINT_URL=http://localstack:4566
+      - AWS_ENDPOINT_URL=http://localstack:4566
+    depends_on:
+      - localstack
+    networks:
+      - prj_network
+    entrypoint: /bin/bash
+
+networks:
+  prj_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
